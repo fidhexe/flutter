@@ -1,8 +1,5 @@
 import 'package:esame_flutter/pages/detail_page.dart';
-import 'package:esame_flutter/pages/favorites_page.dart';
-import 'package:esame_flutter/pages/landing_page.dart';
 import 'package:flutter/material.dart';
-
 import 'container_page.dart';
 import 'data/model/model.dart';
 
@@ -21,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainContainer(), // <-- entry point
+      home: const ContainerPage(), // <-- entry point
       routes: {
         "/detail": (context) {
           final Post post = ModalRoute.of(context)!.settings.arguments as Post;
