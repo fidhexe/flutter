@@ -4,7 +4,7 @@ import 'package:esame_flutter/data/model/model.dart';
 
 class ApiService {
   final dio = Dio();
-  static const baseUrl = 'https://jsonplaceholder.typicode.com';
+  static const baseUrl = 'https://jsonplaceholder.typicode.com/';
 
   //"https://pokeapi.co/api/v2/pokemon?limit=150"
   Future<List<Post>> fetchPosts() async {

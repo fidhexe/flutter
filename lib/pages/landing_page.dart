@@ -1,5 +1,7 @@
+import 'package:esame_flutter/components/list_tab/tab.dart';
 import 'package:esame_flutter/data/service/api_service.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Tab;
+
 import '../data/model/model.dart';
 
 class LandingPage extends StatelessWidget {
@@ -10,6 +12,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black12,
       appBar: AppBar(title: Text('LIST')),
       body: FutureBuilder<List<Post>>(
         future: apiservice.fetchPosts(),
@@ -27,13 +30,8 @@ class LandingPage extends StatelessWidget {
             itemCount: posts.length,
             itemBuilder: (context, index) {
               final post = posts[index];
-              return ListTile(
-                title: Text(post.title),
-                subtitle: Text(
-                  post.body,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              return Tab(
+                post: post,
                 onTap: () {
                   Navigator.pushNamed(context, "/detail", arguments: post);
                 },
