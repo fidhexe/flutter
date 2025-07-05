@@ -1,62 +1,55 @@
-import 'package:esame_flutter/components/buttons/save_button.dart';
 import 'package:flutter/material.dart';
 import '../../data/model/model.dart';
+import '../../data/service/favorites_manager.dart';
+import '../buttons/save_button.dart';
 
-class Tab extends StatefulWidget {
+class PostTab extends StatelessWidget {
   final Post post;
   final VoidCallback? onTap;
 
-  const Tab({Key? key, required this.post, this.onTap}) : super(key: key);
-
-  @override
-  State<Tab> createState() => _TabState();
-}
-
-class _TabState extends State<Tab> {
-  bool isFavorite = false;
-
-  void toggleFavorite() {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
-  }
+  const PostTab({super.key, required this.post, this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    final isFavorite = FavoritesManager().isFavorite(post);
+
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(top: BorderSide(color: Colors.grey)),
       ),
       child: InkWell(
-        onTap: widget.onTap,
+        onTap: onTap,
         child: Padding(
-          padding:  EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Row(
             children: [
+              // TEXT CONTENT
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.post.title,
-                      style:  TextStyle(
+                      post.title,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
-                     SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
-                      widget.post.body,
+                      post.body,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   ],
                 ),
               ),
               SaveButton(
                 isFavorite: isFavorite,
-                onToggle: toggleFavorite,
+                onToggle: () async {
+                  await FavoritesManager().toggleFavorite(post);
+                },
               ),
             ],
           ),
@@ -65,3 +58,4 @@ class _TabState extends State<Tab> {
     );
   }
 }
+
